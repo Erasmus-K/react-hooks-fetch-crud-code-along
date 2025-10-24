@@ -35,6 +35,12 @@
       "name": "Cookies",
       "category": "Dessert",
       "isInCart": false
+    },
+    {
+      "id": 7,
+      "name": "Bread",
+      "category": "Bakery",
+      "isInCart": false
     }
   ]
 }

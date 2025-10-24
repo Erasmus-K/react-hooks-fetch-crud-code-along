@@ -1,32 +1,44 @@
 import React, { useState } from "react";
-import ItemForm from "./ItemForm";
-import Filter from "./Filter";
-import Item from "./Item";
+
+const initialItems = [
+  { id: 1, name: "Apples", category: "Produce" },
+  { id: 2, name: "Milk", category: "Dairy" },
+  { id: 3, name: "Yogurt", category: "Dairy" },
+  { id: 4, name: "Cake", category: "Dessert" },
+];
 
 function ShoppingList() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialItems);
+  const [filter, setFilter] = useState("All");
 
-  function handleCategoryChange(category) {
-    setSelectedCategory(category);
-  }
+  const handleFilterChange = (e) => setFilter(e.target.value);
 
-  const itemsToDisplay = items.filter((item) => {
-    if (selectedCategory === "All") return true;
+  const handleDelete = (id) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
 
-    return item.category === selectedCategory;
-  });
+  const displayedItems =
+    filter === "All"
+      ? items
+      : items.filter((item) => item.category === filter);
 
   return (
     <div className="ShoppingList">
-      <ItemForm />
-      <Filter
-        category={selectedCategory}
-        onCategoryChange={handleCategoryChange}
-      />
+      <div className="Filter">
+        <select name="filter" value={filter} onChange={handleFilterChange}>
+          <option value="All">Filter by category</option>
+          <option value="Produce">Produce</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Dessert">Dessert</option>
+        </select>
+      </div>
+
       <ul className="Items">
-        {itemsToDisplay.map((item) => (
-          <Item key={item.id} item={item} />
+        {displayedItems.map((item) => (
+          <li key={item.id}>
+            {item.name} ({item.category})
+            <button onClick={() => handleDelete(item.id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>

@@ -3,8 +3,8 @@ import React from "react";
 function Filter({ category, onCategoryChange }) {
   return (
     <div className="Filter">
-      <select
-        name="filter"
+      <select 
+        name="filter" 
         value={category}
         onChange={(e) => onCategoryChange(e.target.value)}
       >
